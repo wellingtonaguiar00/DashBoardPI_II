@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <img src="assets/img/logo.png" alt="INEP Logo">
+        </div>
+        <nav class="navbar">
+            <ul>
+                <li><a href="#" class="active">Dashboard</a></li>
+                <li><a href="#">Tabelas</a></li>
+                <li><a href="#">Sobre</a></li>
+                <li><a href="#">Mais</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="content">
+        <h1>DASHBOARD</h1>
+        <div class="filter-buttons">
+            <button class="filter-button active" data-region="todos">Todos</button>
+            <button class="filter-button" data-region="norte">Norte</button>
+            <button class="filter-button" data-region="nordeste">Nordeste</button>
+            <button class="filter-button" data-region="sudeste">Sudeste</button>
+            <button class="filter-button" data-region="sul">Sul</button>
+            <button class="filter-button" data-region="centro-oeste">Centro-Oeste</button>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="container">
+                    <h2>Gráfico 1</h2>
+                    <div id="chart1" class="chart" data-region="todos"></div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="container">
+                    <h2>Gráfico 2</h2>
+                    <div id="chart2" class="chart" data-region="todos"></div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="container">
+                    <h2>Gráfico 3</h2>
+                    <div id="chart3" class="chart" data-region="todos"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="container">
+                    <h2>Gráfico 4</h2>
+                    <div id="chart4" class="chart" data-region="todos"></div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="container">
+                    <h2>Gráfico 5</h2>
+                    <div id="chart5" class="chart" data-region="todos"></div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="container">
+                    <h2>Gráfico 6</h2>
+                    <div id="chart6" class="chart" data-region="todos"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="container">
+                    <h2>Informação 1</h2>
+                    <p>Alguma informação importante</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="container">
+                    <h2>Informação 2</h2>
+                    <p>Outra informação relevante</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="assets/js/script.js"></script>
+</body>
+</html>

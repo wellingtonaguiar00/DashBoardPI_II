@@ -1,0 +1,107 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0; /* Fundo cinza claro */
+}
+
+.sidebar {
+    background-color: #233dd2;
+    color: #ffffff;
+    width: 250px;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+.logo {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.logo img {
+    width: 200px;
+    height: 100px;
+    border-radius: 5px;
+}
+
+.navbar {
+    padding: 20px;
+}
+
+.navbar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.navbar ul li {
+    margin-bottom: 15px; /* Aumentando o espaçamento entre os itens */
+}
+
+.navbar ul li a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 18px;
+    display: flex;
+    align-items: center; /* Alinhar texto verticalmente com ícone */
+}
+
+.navbar ul li a.active {
+    font-weight: bold;
+}
+
+.navbar ul li a .material-icons {
+    margin-right: 10px; /* Espaçamento entre ícone e texto */
+}
+
+.content {
+    margin-left: 250px; /* Ajuste para deixar espaço para a barra lateral */
+    padding: 20px;
+}
+
+.container {
+    background-color: #ffffff; /* Fundo branco */
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.container h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px; /* Adicionando margem entre as linhas */
+}
+
+.col {
+    flex: 1;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+.filter-buttons {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.filter-button {
+    padding: 8px 16px;
+    font-size: 16px;
+    border: none;
+    background-color: #ccc; /* Fundo cinza claro */
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.filter-button:not(:last-child) {
+    margin-right: 10px; /* Espaçamento entre os botões */
+}
+
+.filter-button.active {
+    background-color: #233dd2; /* Cor azul para botão ativo */
+    color: #ffffff;
+}
