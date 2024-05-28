@@ -21,72 +21,81 @@
         </nav>
     </div>
     <div class="content">
-        <h1>DASHBOARD</h1>
+        <h1>DASHBOARD Nordeste</h1>
         <div class="filter-buttons">
-            <button class="filter-button active" data-region="todos">Todos</button>
-            <button class="filter-button" data-region="norte">Norte</button>
-            <button class="filter-button" data-region="nordeste">Nordeste</button>
-            <button class="filter-button" data-region="sudeste">Sudeste</button>
-            <button class="filter-button" data-region="sul">Sul</button>
-            <button class="filter-button" data-region="centro-oeste">Centro-Oeste</button>
+            <button class="filter-button" data-region="Pernambuco">Pernambuco</button>
+            <button class="filter-button" data-region="Paraiba">Paraiba</button>
+            <button class="filter-button" data-region="Alagoas">Alagoas</button>
+            <button class="filter-button" data-region="Bahia">Bahia</button>
+            <button class="filter-button" data-region="Maranhão">Maranhão</button>
         </div>
         <div class="row">
             <div class="col">
                 <div class="container">
-                    <h2>Gráfico 1</h2>
-                    <div id="chart1" class="chart" data-region="todos"></div>
+                    <h2>Alunos por Sexo</h2>
+                    <div id="chart1" class="chart">
+                        <canvas></canvas>
+                    </div>
                 </div>
             </div>
             <div class="col">
                 <div class="container">
-                    <h2>Gráfico 2</h2>
-                    <div id="chart2" class="chart" data-region="todos"></div>
+                    <h2>Alunos Brancos vs Outros</h2>
+                    <div id="chart2" class="chart">
+                        <canvas></canvas>
+                    </div>
                 </div>
             </div>
             <div class="col">
                 <div class="container">
-                    <h2>Gráfico 3</h2>
-                    <div id="chart3" class="chart" data-region="todos"></div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <div class="container">
-                    <h2>Gráfico 4</h2>
-                    <div id="chart4" class="chart" data-region="todos"></div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="container">
-                    <h2>Gráfico 5</h2>
-                    <div id="chart5" class="chart" data-region="todos"></div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="container">
-                    <h2>Gráfico 6</h2>
-                    <div id="chart6" class="chart" data-region="todos"></div>
+                    <h2>Alunos Pretos vs Outros</h2>
+                    <div id="chart3" class="chart">
+                        <canvas></canvas>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col">
                 <div class="container">
-                    <h2>Informação 1</h2>
-                    <p>Alguma informação importante</p>
+                    <h2>Alunos Pardos vs Outros</h2>
+                    <div id="chart4" class="chart">
+                        <canvas></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="container">
+                    <h2>Alunos Não Declarados vs Outros</h2>
+                    <div id="chart5" class="chart">
+                        <canvas></canvas>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col">
                 <div class="container">
-                    <h2>Informação 2</h2>
-                    <p>Outra informação relevante</p>
+                    <h2>Número de Alunos por Município</h2>
+                    <div id="chart6" class="chart">
+                        <canvas></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="container">
+                    <h2>Distribuição de Alunos por Sexo em Cada Município</h2>
+                    <div id="chart7" class="chart">
+                        <canvas></canvas>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <script src="assets/js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="assets/script/script.js" defer></script>
+    <script type="text/javascript" src="https://npmcdn.com/parse/dist/parse.min.js"></script>
 </body>
 </html>

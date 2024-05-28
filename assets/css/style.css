@@ -105,3 +105,9 @@ body {
     background-color: #233dd2; /* Cor azul para botão ativo */
     color: #ffffff;
 }
+
+.chart {
+    width: 100%;
+    height: 400px; /* Ajuste a altura conforme necessário */
+    position: relative;
+}
