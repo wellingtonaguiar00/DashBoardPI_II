@@ -88,6 +88,13 @@ body {
     margin-bottom: 20px;
 }
 
+/* Adicionando estilo para o botão ativo */
+.filter-button.active {
+    background-color: #233dd2; /* Cor azul para botão ativo */
+    color: #ffffff;
+}
+
+/* Estilo para os botões */
 .filter-button {
     padding: 8px 16px;
     font-size: 16px;
@@ -97,13 +104,9 @@ body {
     cursor: pointer;
 }
 
+/* Adicionando margem entre os botões */
 .filter-button:not(:last-child) {
     margin-right: 10px; /* Espaçamento entre os botões */
-}
-
-.filter-button.active {
-    background-color: #233dd2; /* Cor azul para botão ativo */
-    color: #ffffff;
 }
 
 .chart {

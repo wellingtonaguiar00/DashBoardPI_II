@@ -1,8 +1,38 @@
-// Função para carregar e renderizar os gráficos
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.filter-button').forEach(button => {
+        button.addEventListener('click', function() {
+            const region = 'Nordeste'; // Região fixa para esse exemplo
+            const uf = button.getAttribute('data-region');
+            loadAndRenderCharts(region, uf);
+        });
+    });
+
+    // Carrega e renderiza os gráficos para Pernambuco por padrão
+    loadAndRenderCharts('Nordeste', 'Pernambuco');
+});
+
+let chartInstances = {};
+
 async function loadAndRenderCharts(region, uf) {
     // Inicializa o Parse
     Parse.initialize("OEAZ5jlnqRkRPtQE0JqhaFYR7pTPzbtWZKlq1Fk5", "jw06RXDuYwYPnwPUXyu4mrx66QExaXL4oD21a0dO");
     Parse.serverURL = 'https://parseapi.back4app.com/';
+
+    // Mapeamento dos nomes das UFs para suas versões acentuadas
+    const ufMap = {
+        'Alagoas': 'Alagoas',
+        'Bahia': 'Bahia',
+        'Ceara': 'Ceará',
+        'Maranhao': 'Maranhão',
+        'Paraiba': 'Paraíba',
+        'Pernambuco': 'Pernambuco',
+        'Piaui': 'Piauí',
+        'RioGrandeDoNorte': 'Rio Grande do Norte',
+        'Sergipe': 'Sergipe'
+    };
+
+    // Verifique se o UF precisa ser mapeado para a versão acentuada
+    const ufWithAccent = ufMap[uf] || uf;
 
     try {
         // Consulta a classe 'INEP'
@@ -10,10 +40,10 @@ async function loadAndRenderCharts(region, uf) {
         const query = new Parse.Query(INEP);
         // Filtra os resultados pela região e UF selecionadas
         query.equalTo("REGIAO", region);
-        query.equalTo("UF", uf);
+        query.equalTo("UF", ufWithAccent);
         query.limit(10000); // Ajusta o limite de resultados para a consulta
 
-        console.log(`Iniciando consulta para região: ${region}, UF: ${uf}`);
+        console.log(`Iniciando consulta para região: ${region}, UF: ${ufWithAccent}`);
         
         let results = [];
         let page = 0;
@@ -38,6 +68,9 @@ async function loadAndRenderCharts(region, uf) {
         const data = formatData(results);
 
         console.log("Dados formatados:", data);
+
+        // Destruir gráficos existentes
+        destroyExistingCharts();
 
         // Cria os gráficos com os dados obtidos
         renderCharts(data);
@@ -102,38 +135,48 @@ function formatData(results) {
     };
 }
 
+// Função para destruir gráficos existentes
+function destroyExistingCharts() {
+    for (let chartId in chartInstances) {
+        if (chartInstances[chartId]) {
+            chartInstances[chartId].destroy();
+            chartInstances[chartId] = null;
+        }
+    }
+}
+
 // Função para renderizar os gráficos com os dados
 function renderCharts(data) {
     // Gráfico 1: Alunos por sexo
-    createPieChart('chart1', ['Masculino', 'Feminino'], [data.totalMasculino, data.totalFeminino], ['#36a2eb', '#ff6384']);
+    chartInstances['chart1'] = createPieChart('chart1', ['Masculino', 'Feminino'], [data.totalMasculino, data.totalFeminino], ['#36a2eb', '#ff6384']);
 
     // Gráfico 2: Alunos brancos em relação ao total de matriculados
-    createPieChart('chart2', ['Brancos', 'Outros'], [data.totalBranco, data.totalMatriculado - data.totalBranco], ['#ffcd56', '#4bc0c0']);
+    chartInstances['chart2'] = createPieChart('chart2', ['Brancos', 'Outros'], [data.totalBranco, data.totalMatriculado - data.totalBranco], ['#ffcd56', '#4bc0c0']);
 
     // Gráfico 3: Alunos pretos em relação ao total de matriculados
-    createPieChart('chart3', ['Pretos', 'Outros'], [data.totalPreto, data.totalMatriculado - data.totalPreto], ['#ff9f40', '#4bc0c0']);
+    chartInstances['chart3'] = createPieChart('chart3', ['Pretos', 'Outros'], [data.totalPreto, data.totalMatriculado - data.totalPreto], ['#ff9f40', '#9966ff']);
 
     // Gráfico 4: Alunos pardos em relação ao total de matriculados
-    createPieChart('chart4', ['Pardos', 'Outros'], [data.totalPardo, data.totalMatriculado - data.totalPardo], ['#9966ff', '#4bc0c0']);
+    chartInstances['chart4'] = createPieChart('chart4', ['Pardos', 'Outros'], [data.totalPardo, data.totalMatriculado - data.totalPardo], ['#ff6384', '#36a2eb']);
 
     // Gráfico 5: Alunos não declarados em relação ao total de matriculados
-    createPieChart('chart5', ['Não Declarados', 'Outros'], [data.totalNaoDeclarado, data.totalMatriculado - data.totalNaoDeclarado], ['#c9cbcf', '#4bc0c0']);
+    chartInstances['chart5'] = createPieChart('chart5', ['Não Declarados', 'Outros'], [data.totalNaoDeclarado, data.totalMatriculado - data.totalNaoDeclarado], ['#4bc0c0', '#ffcd56']);
 
-    // Gráfico 6: Número de Alunos por Município
-    createBarChart('chart6', Object.keys(data.alunosPorMunicipio), Object.values(data.alunosPorMunicipio), 'Número de Alunos', '#36a2eb');
+    // Gráfico 6: Total de alunos por município
+    const municipios = Object.keys(data.alunosPorMunicipio);
+    const totalAlunosPorMunicipio = municipios.map(municipio => data.alunosPorMunicipio[municipio]);
+    chartInstances['chart6'] = createBarChart('chart6', municipios, totalAlunosPorMunicipio, 'Total de Alunos', '#36a2eb');
 
-    // Gráfico 7: Distribuição de Alunos por Sexo em Cada Município
-    const municipios = Object.keys(data.sexoPorMunicipio);
-    const masculinoPorMunicipio = municipios.map(municipio => data.sexoPorMunicipio[municipio].masculino);
-    const femininoPorMunicipio = municipios.map(municipio => data.sexoPorMunicipio[municipio].feminino);
-
-    createGroupedBarChart('chart7', municipios, masculinoPorMunicipio, femininoPorMunicipio, ['Masculino', 'Feminino'], ['#36a2eb', '#ff6384']);
+    // Gráfico 7: Distribuição de alunos por sexo em cada município
+    const totalMasculinoPorMunicipio = municipios.map(municipio => data.sexoPorMunicipio[municipio].masculino);
+    const totalFemininoPorMunicipio = municipios.map(municipio => data.sexoPorMunicipio[municipio].feminino);
+    chartInstances['chart7'] = createGroupedBarChart('chart7', municipios, totalMasculinoPorMunicipio, totalFemininoPorMunicipio, ['Masculino', 'Feminino'], ['#36a2eb', '#ff6384']);
 }
 
 // Função para criar um gráfico de pizza
 function createPieChart(chartId, labels, data, backgroundColors) {
     const ctx = document.getElementById(chartId).getElementsByTagName('canvas')[0].getContext('2d');
-    new Chart(ctx, {
+    return new Chart(ctx, {
         type: 'pie',
         data: {
             labels: labels,
@@ -148,7 +191,7 @@ function createPieChart(chartId, labels, data, backgroundColors) {
 // Função para criar um gráfico de barras
 function createBarChart(chartId, labels, data, label, backgroundColor) {
     const ctx = document.getElementById(chartId).getElementsByTagName('canvas')[0].getContext('2d');
-    new Chart(ctx, {
+    return new Chart(ctx, {
         type: 'bar',
         data: {
             labels: labels,
@@ -171,7 +214,7 @@ function createBarChart(chartId, labels, data, label, backgroundColor) {
 // Função para criar um gráfico de barras agrupadas
 function createGroupedBarChart(chartId, labels, data1, data2, legends, backgroundColors) {
     const ctx = document.getElementById(chartId).getElementsByTagName('canvas')[0].getContext('2d');
-    new Chart(ctx, {
+    return new Chart(ctx, {
         type: 'bar',
         data: {
             labels: labels,
@@ -197,17 +240,21 @@ function createGroupedBarChart(chartId, labels, data1, data2, legends, backgroun
         }
     });
 }
+document.addEventListener("DOMContentLoaded", function () {
+    const filterButtons = document.querySelectorAll(".filter-button");
 
-// Adiciona um event listener aos botões de filtro
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.filter-button').forEach(button => {
-        button.addEventListener('click', function() {
-            const region = 'Nordeste'; // Região fixa para esse exemplo
-            const uf = button.getAttribute('data-region');
-            loadAndRenderCharts(region, uf);
+    filterButtons.forEach((button) => {
+        button.addEventListener("click", function () {
+            const region = this.getAttribute("data-region");
+
+            // Adiciona a classe 'active' ao botão clicado
+            filterButtons.forEach((btn) => {
+                btn.classList.remove("active");
+            });
+            this.classList.add("active");
+
+            // Aqui você pode chamar a função que renderiza os gráficos com base no estado selecionado (region)
+            // Por exemplo: renderCharts(region);
         });
     });
-
-    // Carrega e renderiza os gráficos para Pernambuco por padrão
-    loadAndRenderCharts('Nordeste', 'Pernambuco');
 });
