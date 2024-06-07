@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
 let chartInstances = {};
 
 async function loadAndRenderCharts(region, uf) {
-    // Inicializa o Parse
+    // Inicializando o Parse
     Parse.initialize("OEAZ5jlnqRkRPtQE0JqhaFYR7pTPzbtWZKlq1Fk5", "jw06RXDuYwYPnwPUXyu4mrx66QExaXL4oD21a0dO");
     Parse.serverURL = 'https://parseapi.back4app.com/';
 
