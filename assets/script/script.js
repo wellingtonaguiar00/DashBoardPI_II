@@ -253,8 +253,6 @@ document.addEventListener("DOMContentLoaded", function () {
             });
             this.classList.add("active");
 
-            // Aqui você pode chamar a função que renderiza os gráficos com base no estado selecionado (region)
-            // Por exemplo: renderCharts(region);
         });
     });
 });
